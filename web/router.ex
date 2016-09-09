@@ -13,6 +13,12 @@ defmodule KatashinInfo.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/admin", KatashinInfo do
+    pipe_through :browser
+
+    get "/", AdminController, :index
+  end
+
   scope "/api", KatashinInfo.Api do
     pipe_through :api
 
