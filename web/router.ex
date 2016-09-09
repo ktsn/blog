@@ -13,14 +13,11 @@ defmodule KatashinInfo.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", KatashinInfo do
-    pipe_through :browser # Use the default browser stack
+  scope "/api", KatashinInfo.Api do
+    pipe_through :api
 
-    get "/", PageController, :index
+    scope "/v1", V1 do
+      resources "/articles", ArticleController, except: [:new, :edit]
+    end
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", KatashinInfo do
-  #   pipe_through :api
-  # end
 end
