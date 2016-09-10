@@ -2,9 +2,11 @@ defmodule KatashinInfo.Api.V1.ArticleView do
   use KatashinInfo.Web, :view
 
   alias KatashinInfo.Api.V1.ArticleView
+  alias KatashinInfo.Api.V1.PageView
 
-  def render("index.json", %{articles: articles}) do
-    %{data: render_many(articles, ArticleView, "article.json")}
+  def render("index.json", %{page: page, articles: articles}) do
+    %{page: render_one(page, PageView, "page.json"),
+      data: render_many(articles, ArticleView, "article.json")}
   end
 
   def render("show.json", %{article: article}) do

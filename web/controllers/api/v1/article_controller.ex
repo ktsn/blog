@@ -3,9 +3,19 @@ defmodule KatashinInfo.Api.V1.ArticleController do
 
   alias KatashinInfo.Article
 
-  def index(conn, _params) do
-    articles = Repo.all(Article)
-    render(conn, "index.json", articles: articles)
+  def index(conn, params) do
+    page =
+      Article
+      |> order_by(desc: :inserted_at)
+      |> Repo.paginate(params)
+
+    render conn, "index.json",
+      articles: page.entries,
+      page: %{
+        page_number: page.page_number,
+        page_size: page.page_size,
+        total_pages: page.total_pages,
+        total_entries: page.total_entries}
   end
 
   def create(conn, %{"article" => article_params}) do
