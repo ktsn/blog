@@ -6,21 +6,26 @@ import type Article from 'core/models/article'
 import type Page from 'core/models/page'
 import { empty as emptyPage } from 'core/models/page-factory'
 
-import { replace } from 'core/utils'
-
 const state = {
   articles: ([]: Article[]),
   page: emptyPage()
 }
 
 const getters: { [key: string]: (state: typeof state) => any } = {
-  articles: ({ articles, page }) => articles.slice(page.pageNumber - 1, page.pageSize),
+  articles: state => state.articles,
   articlePage: state => state.page
 }
 
 const actions = {
-  fetchArticles ({ commit }: any) {
-    return getArticles().then(data => commit('paginateArticles', data))
+  fetchArticles (
+    { commit, state }: any,
+    { page, size }: { page: number, size: number }
+  ) {
+    page = page || 1
+    size = size || state.page.pageSize
+
+    return getArticles({ page, size })
+      .then(data => commit('paginateArticles', data))
   },
 
   submitArticle ({ commit }: any, article: Article) {
@@ -35,7 +40,7 @@ const mutations = {
   },
 
   paginateArticles (state: typeof state, { page, data }: { page: Page, data: Article[] }) {
-    replace(state.articles, data, page.pageNumber - 1)
+    state.articles = data
     state.page = page
   }
 }

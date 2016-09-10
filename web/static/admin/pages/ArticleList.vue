@@ -11,7 +11,11 @@ export default {
   methods: mapActions(['fetchArticles']),
 
   created () {
-    this.fetchArticles()
+    const { page, size } = this.$route.query
+    this.fetchArticles({
+      page,
+      size
+    })
   }
 }
 </script>

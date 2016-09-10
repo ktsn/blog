@@ -6,12 +6,18 @@ import { fromAjax as pageFromAjax } from '../models/page-factory'
 import { fromAjax as articleFromAjax } from '../models/article-factory'
 import { get, post } from './fetch'
 
-export function getArticles (): Promise<{ page: Page, data: Article[] }> {
-  return get('/articles')
-    .then(res => ({
-      page: pageFromAjax(res.page),
-      data: res.data.map(articleFromAjax)
-    }))
+export function getArticles (
+  { page, size }: { page: number, size: number }
+): Promise<{ page: Page, data: Article[] }> {
+  return get('/articles', {
+    params: {
+      page,
+      page_size: size
+    }
+  }).then(res => ({
+    page: pageFromAjax(res.page),
+    data: res.data.map(articleFromAjax)
+  }))
 }
 
 export function postArticle (data: Article): Promise<Article> {

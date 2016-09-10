@@ -3,7 +3,7 @@
 import Page from './page'
 
 export function empty (): Page {
-  return new Page(1, 0, 1, 0)
+  return new Page(1, 10, 1, 0)
 }
 
 export function fromAjax (data: any): Page {
