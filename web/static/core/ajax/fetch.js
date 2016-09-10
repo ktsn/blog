@@ -4,9 +4,10 @@
 import 'es6-promise'
 import 'whatwg-fetch'
 
-import { isObject } from 'lodash'
+import { isObject, toPairs } from 'lodash'
 
 interface Options {
+  params?: Object;
   body?: Object;
 }
 
@@ -29,6 +30,14 @@ export function del (url: string, options: Options = {}): Promise<any> {
 function _fetch (url: string, options: any): Promise<any> {
   const opts: FetchOptions = {
     credentials: 'same-origin'
+  }
+
+  if (isObject(options.params)) {
+    const paramsStr = toPairs(options.params).map(pair => {
+      return pair.join('=')
+    }).join('&')
+
+    url = url + '?' + paramsStr
   }
 
   if (isObject(options.body)) {
