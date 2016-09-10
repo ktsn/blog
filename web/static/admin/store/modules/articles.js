@@ -1,19 +1,26 @@
 // @flow
 
 import { getArticles, postArticle } from 'core/ajax/articles'
+
 import type Article from 'core/models/article'
+import type Page from 'core/models/page'
+import { empty as emptyPage } from 'core/models/page-factory'
+
+import { replace } from 'core/utils'
 
 const state = {
-  articles: []
+  articles: ([]: Article[]),
+  page: emptyPage()
 }
 
 const getters: { [key: string]: (state: typeof state) => any } = {
-  articles: state => state.articles
+  articles: ({ articles, page }) => articles.slice(page.pageNumber - 1, page.pageSize),
+  articlePage: state => state.page
 }
 
 const actions = {
   fetchArticles ({ commit }: any) {
-    return getArticles().then(data => commit('replaceArticles', data))
+    return getArticles().then(data => commit('paginateArticles', data))
   },
 
   submitArticle ({ commit }: any, article: Article) {
@@ -27,8 +34,9 @@ const mutations = {
     state.articles.unshift(article)
   },
 
-  replaceArticles (state: typeof state, articles: Article[]) {
-    state.articles = articles
+  paginateArticles (state: typeof state, { page, data }: { page: Page, data: Article[] }) {
+    replace(state.articles, data, page.pageNumber - 1)
+    state.page = page
   }
 }
 

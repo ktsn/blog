@@ -1,12 +1,17 @@
 // @flow
 
 import type Article from '../models/article'
-import { fromAjax } from '../models/article-factory'
+import type Page from '../models/page'
+import { fromAjax as pageFromAjax } from '../models/page-factory'
+import { fromAjax as articleFromAjax } from '../models/article-factory'
 import { get, post } from './fetch'
 
-export function getArticles (): Promise<Article[]> {
+export function getArticles (): Promise<{ page: Page, data: Article[] }> {
   return get('/articles')
-    .then(res => res.data.map(fromAjax))
+    .then(res => ({
+      page: pageFromAjax(res.page),
+      data: res.data.map(articleFromAjax)
+    }))
 }
 
 export function postArticle (data: Article): Promise<Article> {
@@ -17,5 +22,5 @@ export function postArticle (data: Article): Promise<Article> {
         body: data.body
       }
     }
-  }).then(res => fromAjax(res.data))
+  }).then(res => articleFromAjax(res.data))
 }
