@@ -2,7 +2,11 @@
   "presets": [
     ["es2015", { "module": false }]
   ],
-  "plugins": ["transform-object-rest-spread"],
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-class-properties",
+    "transform-flow-strip-types"
+  ],
   "env": {
     "development": {
       "presets": ["power-assert"]

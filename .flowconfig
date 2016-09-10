@@ -1,0 +1,15 @@
+[ignore]
+.*/node_modules/.*
+<PROJECT_ROOT>/\.tmp/.*
+<PROJECT_ROOT>/priv/static/.*
+
+[include]
+
+[libs]
+web/static/flow/
+
+[options]
+module.file_ext=.js
+module.file_ext=.vue
+module.name_mapper='^core/\(.*\)$' -> '<PROJECT_ROOT>/web/static/core/\1'
+module.name_mapper='^admin/\(.*\)$' -> '<PROJECT_ROOT>/web/static/admin/\1'
