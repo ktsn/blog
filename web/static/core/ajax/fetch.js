@@ -4,7 +4,7 @@
 import 'es6-promise'
 import 'whatwg-fetch'
 
-import { isObject } from '../utils'
+import { isObject } from 'lodash'
 
 interface Options {
   body?: Object;

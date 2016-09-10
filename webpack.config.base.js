@@ -11,6 +11,9 @@ const postcss = [
 
 module.exports = {
   resolve: {
+    alias: {
+      lodash: 'lodash-es'
+    },
     modules: [
       path.resolve(__dirname, 'web/static'),
       'node_modules'
