@@ -16,7 +16,12 @@ defmodule KatashinInfo.Router do
   scope "/admin", KatashinInfo do
     pipe_through :browser
 
-    get "/", AdminController, :index
+    Enum.each [
+      "/",
+      "/articles", "/articles/:id", "/articles/new"
+    ], fn path ->
+      get path, AdminController, :index
+    end
   end
 
   scope "/api", KatashinInfo.Api do
