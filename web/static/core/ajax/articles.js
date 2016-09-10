@@ -2,7 +2,12 @@
 
 import type Article from '../models/article'
 import { fromAjax } from '../models/article-factory'
-import { post } from './fetch'
+import { get, post } from './fetch'
+
+export function getArticles (): Promise<Article[]> {
+  return get('/articles')
+    .then(res => res.data.map(fromAjax))
+}
 
 export function postArticle (data: Article): Promise<Article> {
   return post('/articles', {

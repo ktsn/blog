@@ -10,19 +10,19 @@ interface Options {
   body?: Object;
 }
 
-export function get (url: string, options: Options = {}): Promise<FetchResponse> {
+export function get (url: string, options: Options = {}): Promise<any> {
   return _fetch(url, { ...options, method: 'GET' })
 }
 
-export function post (url: string, options: Options = {}): Promise<FetchResponse> {
+export function post (url: string, options: Options = {}): Promise<any> {
   return _fetch(url, { ...options, method: 'POST' })
 }
 
-export function put (url: string, options: Options = {}): Promise<FetchResponse> {
+export function put (url: string, options: Options = {}): Promise<any> {
   return _fetch(url, { ...options, method: 'PUT' })
 }
 
-export function del (url: string, options: Options = {}): Promise<FetchResponse> {
+export function del (url: string, options: Options = {}): Promise<any> {
   return _fetch(url, { ...options, method: 'DELETE' })
 }
 
@@ -46,7 +46,7 @@ function _fetch (url: string, options: any): Promise<any> {
       if (res.status >= 200 && res.status < 300) {
         return res.json()
       } else {
-        const error = new Error(res.statusText)
+        const error: any = new Error(res.statusText)
         error.response = res
         return Promise.reject(error)
       }

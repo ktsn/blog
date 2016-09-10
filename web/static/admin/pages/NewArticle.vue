@@ -5,7 +5,8 @@ article
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+// @flow
+import type Article from 'core/models/article'
 import ArticleForm from '../components/ArticleForm'
 
 export default {
@@ -13,7 +14,14 @@ export default {
     ArticleForm
   },
 
-  methods: mapActions(['submitArticle'])
+  methods: {
+    submitArticle (article: Article) {
+      this.$store.dispatch('submitArticle', article)
+        .then(() => {
+          this.$router.push('/articles')
+        })
+    }
+  }
 }
 </script>
 
