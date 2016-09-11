@@ -44,6 +44,10 @@ if (process.env.NODE_ENV === 'production') {
     new ExtractTextPlugin('[name]/app.css')
   ])
 } else {
+  const DashboardPlugin = require('webpack-dashboard/plugin')
+
+  config.plugins.push(new DashboardPlugin())
+
   config.devtool = 'source-map'
 
   config.vue.loaders.scss = 'style!css!sass'

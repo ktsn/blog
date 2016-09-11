@@ -20,7 +20,7 @@
     "release": "run-s test:ci clean build:prod",
     "flow": "flow check",
     "lint": "eslint --fix \"web/static/**/*.+(js|vue)\" && eslint --fix \"test/static/**/*.js\"",
-    "dev": "webpack-dev-server --inline --hot --no-info --config webpack.config.js",
+    "dev": "webpack-dashboard -- webpack-dev-server --inline --hot --no-info --config webpack.config.js",
     "testem": "testem",
     "testem:ci": "testem ci --launch Firefox",
     "test": "run-p watch:test testem",
@@ -59,6 +59,7 @@
     "testem": "^1.6.0",
     "vue-loader": "^9.3.2",
     "webpack": "^2.1.0-beta.22",
+    "webpack-dashboard": "^0.1.8",
     "webpack-dev-server": "^2.1.0-beta.4"
   },
   "dependencies": {
