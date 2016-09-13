@@ -19,7 +19,7 @@ defmodule KatashinInfo.Mixfile do
   def application do
     [mod: {KatashinInfo, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :scrivener_ecto]]
+                    :phoenix_ecto, :postgrex, :scrivener_ecto, :guardian, :comeonin, :monad]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,10 @@ defmodule KatashinInfo.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:scrivener_ecto, "~> 1.0"}]
+     {:scrivener_ecto, "~> 1.0"},
+     {:guardian, "~> 0.12.0"},
+     {:comeonin, "~> 2.5"},
+     {:monad, "~> 1.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

@@ -18,7 +18,8 @@ defmodule KatashinInfo.Router do
 
     Enum.each [
       "/",
-      "/articles", "/articles/:id", "/articles/new"
+      "/articles", "/articles/:id", "/articles/new",
+      "/login"
     ], fn path ->
       get path, AdminController, :index
     end
@@ -29,6 +30,9 @@ defmodule KatashinInfo.Router do
 
     scope "/v1", V1 do
       resources "/articles", ArticleController, except: [:new, :edit]
+
+      post "/login", AuthController, :login, as: :login
+      delete "/logout", AuthController, :logout, as: :logout
     end
   end
 end
