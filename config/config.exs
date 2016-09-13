@@ -17,6 +17,14 @@ config :katashin_info, KatashinInfo.Endpoint,
   pubsub: [name: KatashinInfo.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configures guardian authentication
+config :guardian, Guardian,
+  issuer: "KatashinInfo",
+  ttl: {30, :days},
+  verify_issuer: true,
+  secret_key: "LzOmTg5IqdU7pq7iBSgtXUKEuDg6ZjJDiQu4K8Uw749u6GtHh0dXlN",
+  serializer: KatashinInfo.GuardianSerializer
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

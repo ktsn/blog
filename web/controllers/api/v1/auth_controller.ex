@@ -22,8 +22,12 @@ defmodule KatashinInfo.Api.V1.AuthController do
       end
 
     case result do
-      {:ok, user} -> user
-      {:error, reason} -> render_unauthorized(conn, reason)
+      {:ok, user} ->
+        conn
+        |> Guardian.Plug.sign_in(user)
+        |> render(KatashinInfo.Api.V1.UserView, "show.json", user: user)
+      {:error, reason} ->
+        render_unauthorized(conn, reason)
     end
   end
 
