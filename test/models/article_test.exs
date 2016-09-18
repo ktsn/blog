@@ -3,7 +3,7 @@ defmodule KatashinInfo.ArticleTest do
 
   alias KatashinInfo.Article
 
-  @valid_attrs %{body: "some content", title: "some content"}
+  @valid_attrs %{body: "some content", title: "some content", author_user_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

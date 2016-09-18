@@ -5,6 +5,8 @@ defmodule KatashinInfo.Article do
     field :title, :string
     field :body, :string
 
+    belongs_to :author, KatashinInfo.User, foreign_key: :author_user_id
+
     timestamps()
   end
 
@@ -13,7 +15,7 @@ defmodule KatashinInfo.Article do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :body])
-    |> validate_required([:title, :body])
+    |> cast(params, [:title, :body, :author_user_id])
+    |> validate_required([:title, :body, :author_user_id])
   end
 end

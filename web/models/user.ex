@@ -10,6 +10,8 @@ defmodule KatashinInfo.User do
     field :crypted_password, :string
     field :password, :string, virtual: true
 
+    has_many :authored_articles, KatashinInfo.Article, foreign_key: :author_user_id
+
     timestamps()
   end
 

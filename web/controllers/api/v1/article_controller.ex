@@ -19,7 +19,8 @@ defmodule KatashinInfo.Api.V1.ArticleController do
   end
 
   def create(conn, %{"article" => article_params}) do
-    changeset = Article.changeset(%Article{}, article_params)
+    user = Guardian.Plug.current_resource(conn)
+    changeset = Article.changeset(%Article{author_user_id: user.id}, article_params)
 
     case Repo.insert(changeset) do
       {:ok, article} ->

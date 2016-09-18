@@ -10,5 +10,9 @@ defmodule KatashinInfo.Repo.Migrations.CreateUser do
     end
 
     create unique_index(:users, [:email])
+
+    alter table(:articles) do
+      add :author_user_id, references(:users), null: false
+    end
   end
 end
