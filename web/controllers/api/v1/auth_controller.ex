@@ -36,4 +36,8 @@ defmodule KatashinInfo.Api.V1.AuthController do
     |> put_status(401)
     |> render(KatashinInfo.ErrorView, "401.json", reason: reason)
   end
+
+  def unauthenticated(conn, _params) do
+    render_unauthorized(conn, "Login is required")
+  end
 end

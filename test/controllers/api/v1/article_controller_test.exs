@@ -45,6 +45,12 @@ defmodule KatashinInfo.Api.V1.ArticleControllerTest do
     assert Repo.get_by(Article, Map.merge(@valid_attrs, %{author_user_id: user.id}))
   end
 
+  test "does not create resource and renders error when the user is not signed in", %{conn: conn} do
+    conn = post conn, article_path(conn, :create), article: @valid_attrs
+
+    assert json_response(conn, 401)["error"]["message"] === "Login is required"
+  end
+
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     user = Repo.insert! @user_attrs
     conn = conn
@@ -64,6 +70,17 @@ defmodule KatashinInfo.Api.V1.ArticleControllerTest do
     assert Repo.get_by(Article, Map.merge(@valid_attrs, %{author_user_id: user.id}))
   end
 
+  test "does not update resource and renders error when the user is not signed in", %{conn: conn} do
+    user = Repo.insert! @user_attrs
+    article = Repo.insert! %Article{body: "original content", title: "original content", author_user_id: user.id}
+    conn = put conn, article_path(conn, :update, article), article: @valid_attrs
+
+    assert json_response(conn, 401)["error"]["message"] == "Login is required"
+    assert Repo.get_by(Article, %{body: "original content",
+      title: "original content",
+      author_user_id: user.id})
+  end
+
   test "deletes chosen resource", %{conn: conn} do
     user = Repo.insert! @user_attrs
     article = Repo.insert! %Article{body: "some content", title: "some content", author_user_id: user.id}
@@ -73,5 +90,14 @@ defmodule KatashinInfo.Api.V1.ArticleControllerTest do
 
     assert response(conn, 204)
     refute Repo.get(Article, article.id)
+  end
+
+  test "does not delete and renders error when the user is not signed in", %{conn: conn} do
+    user = Repo.insert! @user_attrs
+    article = Repo.insert! %Article{body: "some content", title: "some content", author_user_id: user.id}
+    conn = delete conn, article_path(conn, :delete, article)
+
+    assert json_response(conn, 401)["error"]["message"] == "Login is required"
+    assert Repo.get(Article, article.id)
   end
 end

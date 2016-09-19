@@ -18,6 +18,10 @@ defmodule KatashinInfo.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  pipeline :api_auth do
+    plug Guardian.Plug.EnsureAuthenticated, handler: KatashinInfo.Api.V1.AuthController
+  end
+
   scope "/admin", KatashinInfo do
     pipe_through :browser
 
@@ -34,10 +38,14 @@ defmodule KatashinInfo.Router do
     pipe_through :api
 
     scope "/v1", V1 do
-      resources "/articles", ArticleController, except: [:new, :edit]
+      resources "/articles", ArticleController, only: [:index, :show]
 
       post "/login", AuthController, :login, as: :login
       delete "/logout", AuthController, :logout, as: :logout
+
+      pipe_through :api_auth
+
+      resources "/articles", ArticleController, only: [:create, :update, :delete]
     end
   end
 end
