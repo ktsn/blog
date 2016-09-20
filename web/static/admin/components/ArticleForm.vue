@@ -8,7 +8,7 @@ form.article-form(@submit.prevent="submitArticle")
 
 <script>
 import MarkdownRenderer from 'core/components/MarkdownRenderer'
-import { empty } from 'core/models/article-factory'
+import { empty } from 'core/models/article'
 
 export default {
   props: {

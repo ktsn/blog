@@ -1,6 +1,6 @@
 // @flow
 
-export default class Article {
+export class Article {
   id: ?number;
   title: string;
   body: string;
@@ -18,4 +18,16 @@ export default class Article {
       this.body
     )
   }
+}
+
+export function empty (): Article {
+  return new Article(null, '', '')
+}
+
+export function fromAjax (data: any): Article {
+  return new Article(
+    data.id,
+    data.title,
+    data.body
+  )
 }

@@ -6,7 +6,7 @@ article
 
 <script>
 // @flow
-import type Article from 'core/models/article'
+import type { Article } from 'core/models/article'
 import ArticleForm from '../components/ArticleForm'
 
 export default {

@@ -1,9 +1,7 @@
 // @flow
 
-import type Article from '../models/article'
-import type Page from '../models/page'
-import { fromAjax as pageFromAjax } from '../models/page-factory'
-import { fromAjax as articleFromAjax } from '../models/article-factory'
+import { Page, fromAjax as pageFromAjax } from '../models/page'
+import { Article, fromAjax as articleFromAjax } from '../models/article'
 import { get, post } from './fetch'
 
 export function getArticles (

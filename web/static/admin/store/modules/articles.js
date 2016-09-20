@@ -2,9 +2,8 @@
 
 import { getArticles, postArticle } from 'core/ajax/articles'
 
-import type Article from 'core/models/article'
-import type Page from 'core/models/page'
-import { empty as emptyPage } from 'core/models/page-factory'
+import { Article } from 'core/models/article'
+import { Page, empty as emptyPage } from 'core/models/page'
 
 const state = {
   articles: ([]: Article[]),
