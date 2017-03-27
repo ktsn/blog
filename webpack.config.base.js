@@ -47,7 +47,7 @@ exports.config = {
         contentBase: 'priv/static',
         changeOrigin: true,
         router: {
-          'localhost:8080' : 'http://localhost:4000'
+          'localhost:8080': 'http://localhost:4000'
         }
       }
     }
