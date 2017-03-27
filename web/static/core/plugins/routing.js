@@ -21,19 +21,23 @@ export default function install (_Vue: any, { router, store }: any) {
   Vue.component('store-link', {
     functional: true,
     render (h, { data, children }) {
+      const props = data.props || data.attrs
+      let to = props.to
+      if (typeof to === 'string') {
+        to = { name: to }
+      }
+
       return h(
         'router-link',
         {
           ...data,
           props: {
             event: '',
-            ...data.props
+            ...props
           },
           nativeOn: {
             click: (event) => {
-              if (!data.props.to.name) return
-
-              const { to } = data.props
+              if (!to.name) return
 
               event.preventDefault()
               store.dispatch(

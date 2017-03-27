@@ -11,7 +11,7 @@ describe('routing plugin', () => {
       { name: 'foo', path: '/foo' },
       { path: '/no-name' },
       { name: 'bar', path: '/bar', children: [
-        { name: 'baz', path: '/baz' }
+        { name: 'baz', path: 'baz' }
       ] }
     ]
   })
@@ -22,15 +22,10 @@ describe('routing plugin', () => {
     dispatch: td.function('dispatch')
   }
 
-  const hookSpy = td.function('bazHook')
-
   before(() => {
     Vue.use(routing, {
       router,
-      store,
-      hooks: {
-        baz: hookSpy
-      }
+      store
     })
   })
 
