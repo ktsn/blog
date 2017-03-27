@@ -11,4 +11,16 @@ textarea {
   padding: 5px;
 }
 
+a {
+  color: $c-color-link;
+
+  &:visited {
+    color: $c-color-link-visited;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 @import 'themes/button';
