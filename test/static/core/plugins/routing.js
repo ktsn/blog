@@ -1,7 +1,7 @@
 import assert from 'power-assert'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import sinon from 'sinon'
+import td from 'testdouble'
 import routing from 'core/plugins/routing'
 
 describe('routing plugin', () => {
@@ -15,29 +15,39 @@ describe('routing plugin', () => {
       ] }
     ]
   })
+  router.push = td.function('push')
 
   const store = {
-    registerModule: sinon.spy(),
-    dispatch: sinon.spy()
+    registerModule: td.function('registerModule'),
+    dispatch: td.function('dispatch')
   }
+
+  const hookSpy = td.function('bazHook')
 
   before(() => {
     Vue.use(routing, {
       router,
-      store
+      store,
+      hooks: {
+        baz: hookSpy
+      }
     })
   })
 
   it('registers actions that corresponding with routing', () => {
-    assert(store.registerModule.callCount === 1)
-    assert(store.registerModule.lastCall.args[0] === 'routing')
-
-    const { actions } = store.registerModule.lastCall.args[1]
-
-    assert(typeof actions.foo === 'function')
-    assert(typeof actions.bar === 'function')
-    assert(typeof actions.baz === 'function')
-    assert(typeof actions['no-name'] === 'undefined')
+    td.verify(
+      store.registerModule(
+        'routing',
+        td.matchers.argThat(({ actions: a }) => {
+          return (
+            typeof a.foo === 'function'
+            && typeof a.bar === 'function'
+            && typeof a.baz === 'function'
+            && typeof a['no-name'] === 'undefined'
+          )
+        })
+      ), { times: 1 }
+    )
   })
 
   it('intercepts clicking link and dispatch a routing action', () => {
@@ -60,8 +70,39 @@ describe('routing plugin', () => {
 
     vm.$el.click()
 
-    const { args } = store.dispatch.lastCall
-    assert(args[0] === 'routing/foo')
-    assert(args[1].name === 'foo')
+    td.verify(
+      store.dispatch('routing/foo', td.matchers.contains({
+        name: 'foo'
+      })), {
+        times: 1
+      }
+    )
+  })
+
+  it('treats to as routing name if it is string', () => {
+    const vm = new Vue({
+      router,
+      store,
+
+      render: h => {
+        return h('store-link', {
+          props: {
+            to: 'bar'
+          }
+        })
+      }
+    }).$mount()
+
+    assert(vm.$el.getAttribute('href') === '/bar')
+
+    vm.$el.click()
+
+    td.verify(
+      store.dispatch('routing/bar', td.matchers.contains({
+        name: 'bar'
+      })), {
+        times: 1
+      }
+    )
   })
 })
