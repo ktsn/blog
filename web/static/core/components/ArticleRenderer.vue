@@ -26,6 +26,7 @@ export default {
 
 .c-article-renderer {
   &-title {
+    margin-bottom: 30px;
     color: $c-color-dark;
     font-size: $c-size-article-h1;
   }
