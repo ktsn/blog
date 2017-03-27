@@ -1,0 +1,23 @@
+.button {
+  position: relative;
+  padding: 10px 20px;
+  min-width: 210px;
+  background-color: $c-color-base;
+  color: #fff;
+
+  &::after {
+    content: '';
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    transition: opacity $transition-hover;
+  }
+
+  &:hover::after {
+    opacity: 0.2;
+  }
+}

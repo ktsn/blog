@@ -1,0 +1,14 @@
+button {
+  padding: 0;
+  border-width: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  border: 1px solid $c-color-border;
+  padding: 5px;
+}
+
+@import 'themes/button';
