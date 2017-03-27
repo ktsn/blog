@@ -2,12 +2,15 @@
 
 let Vue: any
 
-export default function install (_Vue: any, { router, store }: any) {
+export default function install (_Vue: any, { router, store, hooks }: any) {
   Vue = _Vue
 
   const names = extractAllNames([], router.options.routes)
   const actions = names.reduce((acc, name) => {
-    acc[name] = function routingAction (_, payload) {
+    acc[name] = function routingAction (ctx, payload) {
+      if (hooks[name]) {
+        hooks[name](ctx, payload)
+      }
       router.push({ name, ...payload })
     }
     return acc
