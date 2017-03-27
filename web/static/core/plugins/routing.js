@@ -2,7 +2,7 @@
 
 let Vue: any
 
-export default function install (_Vue: any, { router, store, hooks }: any) {
+export default function install (_Vue: any, { router, store, hooks = {}}: any) {
   Vue = _Vue
 
   const names = extractAllNames([], router.options.routes)
@@ -27,7 +27,7 @@ export default function install (_Vue: any, { router, store, hooks }: any) {
       const props = data.props || data.attrs
       let to = props.to
       if (typeof to === 'string') {
-        to = { name: to }
+        props.to = to = { name: to }
       }
 
       return h(

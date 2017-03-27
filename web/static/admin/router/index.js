@@ -10,7 +10,15 @@ export default new VueRouter({
   mode: 'history',
   base: '/admin',
   routes: [
-    { path: '/articles', component: ArticleList },
-    { path: '/articles/new', component: NewArticle }
+    {
+      name: 'article-list',
+      path: '/articles',
+      component: ArticleList
+    },
+    {
+      name: 'new-article',
+      path: '/articles/new',
+      component: NewArticle
+    }
   ]
 })
