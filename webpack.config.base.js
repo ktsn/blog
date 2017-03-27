@@ -1,15 +1,16 @@
 const path = require('path')
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer')
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin')
 
-const postcss = [
-  autoprefixer({
-    browsers: ['> 1%', 'last 2 versions', 'ie >= 9']
-  })
-]
+const vueOptions = exports.vueOptions = {
+  esModule: true,
+  loaders: {},
+  preLoaders: {
+    scss: 'sass-loader'
+  }
+}
 
-module.exports = {
+exports.config = {
   resolve: {
     alias: {
       lodash: 'lodash-es'
@@ -18,34 +19,27 @@ module.exports = {
       path.resolve(__dirname, 'web/static'),
       'node_modules'
     ],
-    extensions: ['', '.js', '.vue']
+    extensions: ['.js', '.vue']
   },
   module: {
-    preLoaders: [
-      { test: /\.vue$/, loader: 'eslint', exclude: /node_modules/ },
-      { test: /\.js$/, loader: 'eslint', exclude: /node_modules/ },
-      { test: /\.css$/, loader: 'postcss' },
-      { test: /\.scss$/, loader: 'postcss!sass' }
-    ],
     loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.vue$/, loader: 'vue' },
-      { test: /\.json$/, loader: 'json' }
+      { enforce: 'pre', test: /\.vue$/, loader: 'eslint-loader', exclude: /node_modules/ },
+      { enforce: 'pre', test: /\.js$/, loader: 'eslint-loader', exclude: /node_modules/ },
+      { enforce: 'pre', test: /\.css$/, loader: 'postcss-loader' },
+      { enforce: 'pre', test: /\.scss$/, loaders: ['postcss-loader', 'sass-loader'] },
+      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.vue$/, loader: 'vue-loader', options: vueOptions }
     ]
   },
   plugins: [
     new FlowStatusWebpackPlugin({
       failOnError: true
     }),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ],
-  postcss,
-  vue: {
-    loaders: {},
-    postcss
-  },
   devServer: {
     proxy: {
       '**': {
