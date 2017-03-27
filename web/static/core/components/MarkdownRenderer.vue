@@ -1,5 +1,5 @@
 <template lang="pug">
-.markdonw-renderer(v-html="formatted")
+.c-markdown-renderer(v-html="formatted")
 </template>
 
 <script>
@@ -31,4 +31,24 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~core/variables';
+
+.c-markdown-renderer {
+  h1 {
+    color: $c-color-dark;
+    font-size: $c-size-article-h1;
+  }
+
+  h2 {
+    font-size: $c-size-article-h2;
+  }
+
+  h3 {
+    font-size: $c-size-article-h3;
+  }
+
+  h4 {
+    font-size: $c-size-article-h4;
+  }
+}
 </style>
