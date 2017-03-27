@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>katashin.info Admin</title>
-  <link rel="stylesheet" href="<%= static_path(@conn, "/admin/app.css") %>" media="screen and all">
+  <link rel="stylesheet" href="<%= static_path(@conn, "/admin/app.css") %>">
 </head>
 <body>
   <div id="app"></div>
