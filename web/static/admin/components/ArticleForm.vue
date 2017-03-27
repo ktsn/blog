@@ -52,6 +52,7 @@ export default {
 
   &-inner {
     margin-right: 10px;
+    max-width: 50%;
     flex: 0 1 50%;
   }
 
@@ -85,6 +86,7 @@ export default {
 
 .article-preview {
   margin-left: 10px;
+  max-width: 50%;
   flex: 0 0 50%;
 }
 </style>

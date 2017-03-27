@@ -84,5 +84,13 @@ export default {
       margin-top: 0;
     }
   }
+
+  pre {
+    overflow-x: auto;
+    margin: 10px 0;
+    padding: 10px;
+    background: $c-bg-code;
+    border: $c-border-code;
+  }
 }
 </style>
