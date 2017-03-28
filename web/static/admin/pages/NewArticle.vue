@@ -1,6 +1,6 @@
 <template lang="pug">
 article
-  h1 Create New Article
+  h1.b-title New Article
   article-form(@submit="submitArticle")
 </template>
 
