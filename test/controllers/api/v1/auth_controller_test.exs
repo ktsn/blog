@@ -37,4 +37,10 @@ defmodule KatashinInfo.Api.V1.AuthControllerTest do
     user = Repo.get!(User, data["id"])
     assert user.email == data["email"]
   end
+
+  test "reject if the signed up user already exists", %{conn: conn} do
+    User.changeset(%User{}, @valid_attrs) |> Repo.insert!
+    conn = post conn, register_path(conn, :register), %{auth: %{email: "test@example.com", password: "duplicate"}}
+    assert json_response(conn, 400)["error"]["message"] == "email has already been taken"
+  end
 end

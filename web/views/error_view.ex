@@ -1,6 +1,10 @@
 defmodule KatashinInfo.ErrorView do
   use KatashinInfo.Web, :view
 
+  def render("400.json", %{reason: reason}) do
+    %{error: %{message: reason}}
+  end
+
   def render("401.json", %{reason: reason}) do
     %{error: %{message: reason}}
   end
