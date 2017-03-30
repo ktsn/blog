@@ -30,4 +30,11 @@ defmodule KatashinInfo.Api.V1.AuthControllerTest do
     conn = post conn, login_path(conn, :login), %{auth: %{email: "test@example.com", password: "invalid"}}
     assert json_response(conn, 401)["error"]["message"] == "Invalid password"
   end
+
+  test "sign up with email and password", %{conn: conn} do
+    conn = post conn, register_path(conn, :register), %{auth: %{email: "test@example.com", password: "password"}}
+    %{"data" => data} = json_response(conn, 200)
+    user = Repo.get!(User, data["id"])
+    assert user.email == data["email"]
+  end
 end
