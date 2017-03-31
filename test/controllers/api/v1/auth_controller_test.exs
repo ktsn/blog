@@ -1,6 +1,8 @@
 defmodule KatashinInfo.Api.V1.AuthControllerTest do
   use KatashinInfo.ConnCase
 
+  import KatashinInfo.TestHelpers
+
   alias KatashinInfo.User
   @valid_attrs %{email: "test@example.com", password: "password!"}
   @invalid_attrs %{}
@@ -42,5 +44,16 @@ defmodule KatashinInfo.Api.V1.AuthControllerTest do
     User.changeset(%User{}, @valid_attrs) |> Repo.insert!
     conn = post conn, register_path(conn, :register), %{auth: %{email: "test@example.com", password: "duplicate"}}
     assert json_response(conn, 400)["error"]["message"] == "email has already been taken"
+  end
+
+  test "verify authentication", %{conn: conn} do
+    user = User.changeset(%User{}, @valid_attrs) |> Repo.insert!
+    a = get conn, verify_path(conn, :verify)
+    assert !json_response(a, 200)["authenticated"]
+
+    b = conn
+      |> sign_in(user)
+      |> get(verify_path(conn, :verify))
+    assert json_response(b, 200)["authenticated"]
   end
 end

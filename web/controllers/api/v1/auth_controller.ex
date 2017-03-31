@@ -7,6 +7,11 @@ defmodule KatashinInfo.Api.V1.AuthController do
   import KatashinInfo.User
   alias KatashinInfo.User
 
+  def verify(conn, _params) do
+    authenticated = Guardian.Plug.authenticated?(conn)
+    conn |> render(KatashinInfo.Api.V1.AuthView, "verify.json", %{authenticated: authenticated})
+  end
+
   def login(conn, %{"auth" => auth}) do
     query = from u in User,
       where: u.email == ^auth["email"]
