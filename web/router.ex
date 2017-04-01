@@ -15,6 +15,7 @@ defmodule KatashinInfo.Router do
     plug :accepts, ["json"]
     plug :fetch_session
     plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource
   end
 
