@@ -4,8 +4,8 @@ defmodule KatashinInfo.Api.V1.AuthControllerTest do
   import KatashinInfo.TestHelpers
 
   alias KatashinInfo.User
+
   @valid_attrs %{email: "test@example.com", password: "password!"}
-  @invalid_attrs %{}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -17,8 +17,8 @@ defmodule KatashinInfo.Api.V1.AuthControllerTest do
     assert Guardian.Plug.authenticated?(conn)
     assert json_response(conn, 200)["data"] == %{"id" => user.id,
       "email" => user.email,
-      "inserted_at" => Ecto.DateTime.to_iso8601(user.inserted_at),
-      "updated_at" => Ecto.DateTime.to_iso8601(user.updated_at)}
+      "inserted_at" => NaiveDateTime.to_iso8601(user.inserted_at),
+      "updated_at" => NaiveDateTime.to_iso8601(user.updated_at)}
   end
 
   test "rejects if email is not matched", %{conn: conn} do

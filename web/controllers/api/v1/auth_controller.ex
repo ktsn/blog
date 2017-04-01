@@ -52,8 +52,8 @@ defmodule KatashinInfo.Api.V1.AuthController do
           |> Enum.join("\n")
 
         conn
-          |> put_status(400)
-          |> render(KatashinInfo.ErrorView, "400.json", reason: reason)
+        |> put_status(400)
+        |> render(KatashinInfo.ErrorView, "400.json", reason: reason)
     end
   end
 

@@ -5,6 +5,7 @@ defmodule KatashinInfo.Api.V1.ArticleControllerTest do
 
   alias KatashinInfo.Article
   alias KatashinInfo.User
+
   @valid_attrs %{body: "some content", title: "some content"}
   @invalid_attrs %{}
   @user_attrs User.changeset(%User{}, %{email: "test@example.com", password: "pass"})
@@ -25,8 +26,8 @@ defmodule KatashinInfo.Api.V1.ArticleControllerTest do
     assert json_response(conn, 200)["data"] == %{"id" => article.id,
       "title" => article.title,
       "body" => article.body,
-      "inserted_at" => Ecto.DateTime.to_iso8601(article.inserted_at),
-      "updated_at" => Ecto.DateTime.to_iso8601(article.updated_at)}
+      "inserted_at" => NaiveDateTime.to_iso8601(article.inserted_at),
+      "updated_at" => NaiveDateTime.to_iso8601(article.updated_at)}
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do

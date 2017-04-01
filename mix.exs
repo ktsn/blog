@@ -4,7 +4,7 @@ defmodule KatashinInfo.Mixfile do
   def project do
     [app: :katashin_info,
      version: "0.0.1",
-     elixir: "~> 1.2",
+     elixir: "~> 1.4",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -39,7 +39,7 @@ defmodule KatashinInfo.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:scrivener_ecto, "~> 1.0"},
-     {:guardian, "~> 0.12.0"},
+     {:guardian, "~> 0.14.0"},
      {:comeonin, "~> 2.5"},
      {:monad, "~> 1.0"}]
   end
