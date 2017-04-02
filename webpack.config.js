@@ -43,8 +43,6 @@ if (process.env.NODE_ENV === 'production') {
     test: /\.s?css$/,
     loaders: ['style-loader', 'css-loader']
   })
-
-  vueOptions.loaders.scss = 'style-loader!css-loader'
 }
 
 module.exports = config

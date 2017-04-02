@@ -1,18 +1,18 @@
 <template lang="pug">
-nav.navigation
-  ul.navigation-list
+nav.pt-navigation
+  ul.pt-navigation-list
     li.natvigation-item
-      a.navigation-link(href="/")
-        span.navigation-link-text Top
-    li.navigation-item
-      store-link.navigation-link(to="new-article")
-        span.navigation-link-text New Article
+      a.pt-navigation-link(href="/")
+        span.pt-navigation-link-text Top
+    li.pt-navigation-item
+      store-link.pt-navigation-link(to="new-article")
+        span.pt-navigation-link-text New Article
 </template>
 
 <style lang="scss">
 @import '~core/variables';
 
-.navigation {
+.pt-navigation {
   display: block;
   background-color: $c-color-base;
 

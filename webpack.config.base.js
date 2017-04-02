@@ -4,7 +4,9 @@ const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin')
 
 const vueOptions = exports.vueOptions = {
   esModule: true,
-  loaders: {},
+  loaders: {
+    scss: 'style-loader!css-loader'
+  },
   preLoaders: {
     scss: 'sass-loader'
   }
