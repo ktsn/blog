@@ -7,7 +7,10 @@ ul.article-list
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  computed: mapGetters(['articles']),
+  computed: mapGetters({
+    articles: 'articles',
+    page: 'articlePage'
+  }),
   methods: mapActions(['fetchArticles']),
 
   created () {

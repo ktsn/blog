@@ -1,6 +1,6 @@
 // @flow
 
-import { getArticles, postArticle } from 'core/ajax/articles'
+import { getArticles, postArticle } from 'admin/ajax/articles'
 
 import { Article } from 'core/models/article'
 import { Page, empty as emptyPage } from 'core/models/page'
