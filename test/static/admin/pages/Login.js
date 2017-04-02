@@ -4,14 +4,27 @@ import { Store } from 'vuex'
 import Login from 'admin/pages/Login'
 
 describe('Admin Login page', () => {
-  it('sends login request', () => {
-    const store = new Store({
+  let store
+
+  beforeEach(() => {
+    store = new Store({
       modules: {
-        auth: { namespaced: true }
+        auth: {
+          namespaced: true,
+          state: {
+            authenticated: false
+          },
+          getters: {
+            authenticated: state => state.authenticated
+          }
+        },
+        routing: { namespaced: true }
       }
     })
     store.dispatch = td.function()
+  })
 
+  it('sends login request', () => {
     mount({ store }, ({ email, password, submit }) => {
       email.value = 'test@example.com'
       email.dispatchEvent(new Event('input'))
@@ -24,6 +37,29 @@ describe('Admin Login page', () => {
           email: 'test@example.com',
           password: 'password'
         })
+      )
+    })
+  })
+
+  it('redirects aritcle creation page if login is succeeded', done => {
+    mount({ store }, () => {
+      store.state.auth.authenticated = true
+
+      Vue.nextTick(() => {
+        td.verify(
+          store.dispatch('routing/newArticle')
+        )
+        done()
+      })
+    })
+  })
+
+  it('redirects if already logged in', () => {
+    store.state.auth.authenticated = true
+
+    mount({ store }, () => {
+      td.verify(
+        store.dispatch('routing/newArticle')
       )
     })
   })
@@ -40,6 +76,8 @@ function mount (options, fn) {
 
   fn({ email, password, submit })
 
-  document.body.removeChild(vm.$el)
-  vm.$destroy()
+  Vue.nextTick(() => {
+    document.body.removeChild(vm.$el)
+    vm.$destroy()
+  })
 }

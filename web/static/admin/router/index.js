@@ -31,12 +31,12 @@ const router = new VueRouter({
       component: Default,
       children: [
         {
-          name: 'article-list',
+          name: 'articleList',
           path: '/articles',
           component: ArticleList
         },
         {
-          name: 'new-article',
+          name: 'newArticle',
           path: '/articles/new',
           component: NewArticle
         }
@@ -47,12 +47,14 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const isPublic = to.matched.some(m => m.meta.isPublic)
-  if (isPublic) return next()
 
   verify().then(authenticated => {
-    if (authenticated) return next()
-
-    store.dispatch('routing/login')
+    if (authenticated) {
+      store.commit('auth/authenticateSuccess')
+      next()
+    } else if (!isPublic) {
+      store.dispatch('routing/login')
+    }
   })
 })
 

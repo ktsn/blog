@@ -26,8 +26,19 @@ export default {
       'login'
     ]),
     ...mapActions('routing', [
-
+      'newArticle'
     ])
+  },
+
+  watch: {
+    authenticated: {
+      immediate: true,
+      handler (value) {
+        if (value) {
+          this.newArticle()
+        }
+      }
+    }
   }
 }
 </script>

@@ -5,7 +5,7 @@ nav.pt-navigation
       a.pt-navigation-link(href="/")
         span.pt-navigation-link-text Top
     li.pt-navigation-item
-      store-link.pt-navigation-link(to="new-article")
+      store-link.pt-navigation-link(to="newArticle")
         span.pt-navigation-link-text New Article
 </template>
 
