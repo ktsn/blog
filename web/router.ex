@@ -42,7 +42,6 @@ defmodule KatashinInfo.Router do
       resources "/articles", ArticleController, only: [:index, :show]
 
       get "/verify", AuthController, :verify, as: :verify
-      post "/register", AuthController, :register, as: :register
       post "/login", AuthController, :login, as: :login
       delete "/logout", AuthController, :logout, as: :logout
 

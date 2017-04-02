@@ -36,27 +36,6 @@ defmodule KatashinInfo.Api.V1.AuthController do
     end
   end
 
-  def register(conn, %{"auth" => auth}) do
-    result = User.changeset(%User{}, auth) |> Repo.insert
-    case result do
-      {:ok, user} ->
-        conn
-        |> Guardian.Plug.sign_in(user)
-        |> render(KatashinInfo.Api.V1.UserView, "show.json", user: user)
-      {:error, changeset} ->
-        reason =
-          changeset.errors
-          |> Enum.map(fn {name, {msg, _}} ->
-              to_string(name) <> " " <> msg
-            end)
-          |> Enum.join("\n")
-
-        conn
-        |> put_status(400)
-        |> render(KatashinInfo.ErrorView, "400.json", reason: reason)
-    end
-  end
-
   def render_unauthorized(conn, reason) do
     conn
     |> put_status(401)

@@ -33,19 +33,6 @@ defmodule KatashinInfo.Api.V1.AuthControllerTest do
     assert json_response(conn, 401)["error"]["message"] == "Invalid password"
   end
 
-  test "sign up with email and password", %{conn: conn} do
-    conn = post conn, register_path(conn, :register), %{auth: %{email: "test@example.com", password: "password"}}
-    %{"data" => data} = json_response(conn, 200)
-    user = Repo.get!(User, data["id"])
-    assert user.email == data["email"]
-  end
-
-  test "reject if the signed up user already exists", %{conn: conn} do
-    User.changeset(%User{}, @valid_attrs) |> Repo.insert!
-    conn = post conn, register_path(conn, :register), %{auth: %{email: "test@example.com", password: "duplicate"}}
-    assert json_response(conn, 400)["error"]["message"] == "email has already been taken"
-  end
-
   test "verify authentication", %{conn: conn} do
     user = User.changeset(%User{}, @valid_attrs) |> Repo.insert!
     a = get conn, verify_path(conn, :verify)
